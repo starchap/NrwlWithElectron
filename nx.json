@@ -16,6 +16,9 @@
     },
     "electron-electron-app": {
       "tags": []
+    },
+    "desktop-tab-menu-feature": {
+      "tags": []
     }
   }
 }

@@ -10,7 +10,7 @@
       },
       "root": "apps/desktop",
       "sourceRoot": "apps/desktop/src",
-      "prefix": "myworkspace",
+      "prefix": "gbd",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -133,7 +133,7 @@
       },
       "root": "apps/desktop",
       "sourceRoot": "apps/desktop/src",
-      "prefix": "myworkspace",
+      "prefix": "gbd",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -201,10 +201,44 @@
           }
         }
       }
+    },
+    "desktop-tab-menu-feature": {
+      "projectType": "library",
+      "root": "libs/desktop/tab-menu/feature",
+      "sourceRoot": "libs/desktop/tab-menu/feature/src",
+      "prefix": "myworkspace",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/desktop/tab-menu/feature/tsconfig.lib.json",
+              "libs/desktop/tab-menu/feature/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/desktop/tab-menu/feature/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/desktop/tab-menu/feature/jest.config.js",
+            "tsConfig": "libs/desktop/tab-menu/feature/tsconfig.spec.json",
+            "setupFile": "libs/desktop/tab-menu/feature/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nstudio/xplat"
+    "defaultCollection": "@nrwl/angular"
   },
   "schematics": {
     "@nrwl/angular:application": {

@@ -1,6 +1,7 @@
-import { app, BrowserWindow, ipcMain, screen } from 'electron';
+import { app, BrowserWindow, ipcMain, screen, IpcMessageEvent } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+const { exec } = require('child_process');
 
 let serve;
 const args = process.argv.slice(1);
@@ -26,7 +27,8 @@ const mainWindowSettings: Electron.BrowserWindowConstructorOptions = {
   kiosk: false,
   webPreferences: {
     devTools: debugMode
-  }
+  },
+  icon: './icons/gitbit.ico'
 };
 
 /**
@@ -60,7 +62,8 @@ function createWindow() {
   }
 
   win = new BrowserWindow(mainWindowSettings);
-
+  win.setMenu(null);
+  
   let launchPath;
   if (serve) {
     require('electron-reload')(__dirname, {
@@ -88,6 +91,8 @@ function createWindow() {
 
   initMainListener();
 
+  initTerminalListener();
+
   if (debugMode) {
     // Open the DevTools.
     win.webContents.openDevTools();
@@ -112,3 +117,15 @@ try {
     }
   });
 } catch (err) {}
+
+
+function initTerminalListener(){
+  ipcMain.on('exec', (event: IpcMessageEvent, arg: string) => {
+    exec(arg, (err: Error, stdout: string | Buffer, stderr: string | Buffer) => {
+      event.sender.send('execRes', {Error: err, stdOut: stdout, stdErr: stderr});
+      if(err){
+        return;
+      }
+    });
+  });
+}
