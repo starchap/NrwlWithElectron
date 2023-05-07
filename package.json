@@ -62,7 +62,7 @@
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
-    "@angular/cli": "8.3.14",
+    "@angular/cli": "16.0.0",
     "@nrwl/angular": "~8.8.0",
     "@nrwl/workspace": "8.9.0",
     "@types/node": "~8.9.4",
